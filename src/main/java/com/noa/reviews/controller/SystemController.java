@@ -8,9 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
+/**
+ * System Controller
+ * Handles HTTP requests related to reviews and syndications, providing endpoints for creating,
+ * updating, deleting reviews, retrieving reviews by store, and establishing syndication
+ * relationships between stores.
+ */
 @RestController
 @RequestMapping("/reviews")
 public class SystemController {
@@ -61,4 +66,5 @@ public class SystemController {
         syndicationService.createSyndication(storeId, targetStoreId);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
 }

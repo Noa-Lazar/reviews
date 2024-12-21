@@ -5,8 +5,13 @@ import com.noa.reviews.entities.Store;
 import com.noa.reviews.entities.Syndication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
+
+/**
+ * Syndication Service
+ * Manages the creation of syndication relationships between stores, ensuring that they
+ * belong to the same organization and validating that the relationship does not already exist.
+ */
 
 @Service
 public class SyndicationService {
@@ -25,19 +30,16 @@ public class SyndicationService {
         Optional<Store> sourceStore = storeRepository.findById(sourceStoreId);
         Optional<Store> targetStore = storeRepository.findById(targetStoreId);
 
-        if (sourceStore.isEmpty() || targetStore.isEmpty()) {
+        if (sourceStore.isEmpty() || targetStore.isEmpty())
             throw new RuntimeException("Source or Target store not found.");
-        }
 
         // Check if both stores belong to the same organization
-        if (!sourceStore.get().getOrganizationId().equals(targetStore.get().getOrganizationId())) {
+        if (!sourceStore.get().getOrganizationId().equals(targetStore.get().getOrganizationId()))
             throw new IllegalArgumentException("Stores must belong to the same organization for syndication.");
-        }
 
         // Check if the syndication relationship already exists
-        if (syndicationRepository.findBySourceStoreIdAndTargetStoreId(sourceStoreId, targetStoreId).isPresent()) {
+        if (syndicationRepository.findBySourceStoreIdAndTargetStoreId(sourceStoreId, targetStoreId).isPresent())
             throw new IllegalArgumentException("Syndication relationship already exists.");
-        }
 
         // Save the new syndication
         Syndication syndication = Syndication.builder()
@@ -47,4 +49,5 @@ public class SyndicationService {
         syndicationRepository.save(syndication);
         return true;
     }
+
 }

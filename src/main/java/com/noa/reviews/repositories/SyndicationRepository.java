@@ -3,9 +3,14 @@ package com.noa.reviews.repositories;
 import com.noa.reviews.entities.Syndication;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
 import java.util.Optional;
+
+
+/**
+ * Syndication Repository
+ *  Provides methods for accessing syndications in the database.
+ */
 
 @Repository
 public interface SyndicationRepository extends JpaRepository<Syndication, Long> {
@@ -18,4 +23,5 @@ public interface SyndicationRepository extends JpaRepository<Syndication, Long> 
 
     // Find all syndications where the target store matches
     List<Syndication> findByTargetStoreId(Long targetStoreId);
+
 }

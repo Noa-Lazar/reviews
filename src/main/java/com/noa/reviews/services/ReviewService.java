@@ -5,22 +5,25 @@ import com.noa.reviews.entities.*;
 import com.noa.reviews.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
+
+
+/**
+ * Review Service
+ * Manages the core operations for creating, updating, deleting, and retrieving reviews
+ * while interacting with the ReviewRepository.
+ */
 
 @Service
 public class ReviewService {
     private final ReviewRepository reviewRepository;
-    private final SyndicationRepository syndicationRepository;
 
 
     @Autowired
     // Constructor injection for the ReviewRepository and StoreRepository
-    public ReviewService(ReviewRepository reviewRepository,
-                         SyndicationRepository syndicationRepository) {
+    public ReviewService(ReviewRepository reviewRepository) {
         this.reviewRepository = reviewRepository;
-        this.syndicationRepository = syndicationRepository;
     }
 
 
@@ -64,21 +67,6 @@ public class ReviewService {
         // Fetch direct reviews for the store
         List<Review> directReviews = reviewRepository.findAllReviewsByStoreIdAndSyndications(storeId);
         return directReviews.stream().map(Review::getContent).toList();
-
-//        // Fetch syndications where the store is the target
-//        List<Syndication> incomingSyndications = syndicationRepository.findByTargetStoreId(storeId);
-//
-//        // Collect reviews from all source stores syndicated to this store
-//        List<Review> syndicatedReviews = incomingSyndications.stream()
-//                .flatMap(syndication -> reviewRepository.findByStoreId(syndication.getSourceStoreId()).stream())
-//                .toList();
-//
-//        // Combine direct and syndicated reviews
-//        List<Review> allReviews = new ArrayList<>(directReviews);
-//        allReviews.addAll(syndicatedReviews);
-//
-//        // Return the content of all reviews
-//        return allReviews.stream().map(Review::getContent).toList();
     }
 
 }

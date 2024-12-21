@@ -21,7 +21,6 @@ import static org.mockito.Mockito.*;
 
 @SpringBootTest
 class ReviewsServiceTests {
-
 	@Mock
 	private ReviewRepository reviewRepository;
 
